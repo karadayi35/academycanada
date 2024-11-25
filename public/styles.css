@@ -1,0 +1,495 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121a22;
+    font-family: Arial, sans-serif;
+    color:white;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.header {
+    background-color: #2c3e50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #f39c12;
+}
+
+.trusted-casinos, .recommended-casinos {
+    margin: 20px 0;
+}
+
+.casino-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.casino-card {
+    background-color: #1e272e;
+    border: none;
+    border-radius: 10px;
+    width: 200px;
+    height: 250px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(144, 13, 13, 0.5);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.casino-card:hover {
+    transform: scale(1.05);
+}
+
+.casino-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.footer {
+    background-color: #2c3e50;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    position: fixed; /* Footer'ı sayfanın altına sabitlemek için */
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Genişliği tüm ekranı kaplar */
+    z-index: 1; /* Kar efektinin altında kalmaması için */
+}
+
+.footer .social-links {
+    margin-bottom: 10px;
+}
+
+.footer a {
+    color: #3498db;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer p {
+    color: white;
+    font-size: 14px;
+    margin: 5;
+    font-weight: bold;
+}
+
+.footer .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Kar Efekti */
+#snow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.snowflake {
+  position: absolute;
+  top: -50px; /* Kar taneleri ekranın üstünden başlar */
+  color: white; /* Kar taneleri beyaz renkte */
+  will-change: transform, opacity; /* Performans optimizasyonu için */
+  animation: fall linear; /* Düşüş animasyonu */
+  z-index: 1000; /* Kar tanelerinin üstte görünmesi için */
+  pointer-events: none; /* Tıklanabilirliği engeller */
+}
+
+
+
+/* Chat konteyneri sağa taşımak için stil */
+#chat-container {
+    position: fixed; /* Chat alanını sabitle */
+    top: 180px; /* Sayfanın üstünden boşluk (isteğe göre ayarla) */
+    right: 270px; /* Sayfanın sağından boşluk */
+    width: 250px; /* Chat alanının genişliği */
+    height: 650px; /* Chat alanının yüksekliği */
+    background-color: #333; /* Arka plan rengi */
+    color: #fff; /* Yazı rengi */
+    border-radius: 8px; /* Köşeleri yuvarla */
+    padding: 15px; /* İçerik boşluğu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+    overflow: hidden; /* Taşan içerikleri gizle */
+  }
+  
+  /* Header */
+  #chat-header {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  #chat-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  #chat-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #fff;
+  }
+  
+  /* User Info */
+  #user-info {
+    background-color: #262626;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .user {
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+  }
+  
+  .username {
+    font-weight: bold;
+    margin: 0px; /*Kullanıcı adı ve mesaj arasında boşluk kaldırıldı*/
+    display: inline;
+
+  }
+  
+  
+  .points {
+    color: #ffd700;
+  }
+  
+  /* Chat mesaj alanı */
+  #chat-messages {
+    display: flex;
+    flex-direction: column; /* Mesajları alt alta sıralar */
+    align-items: flex-start; /* Mesajları sola yaslar */
+    height: 400px; /* Mesaj alanı yüksekliği */
+    overflow-y: auto; /* Kaydırma */
+    background-color: #222; /* Arka plan rengi */
+    padding: 10px; /* İçerik boşluğu */
+    border-radius: 8px; /* Köşeleri yuvarlar */
+    
+  }
+  
+ /* Tek bir mesaj stili */
+.message {
+    display: flex;
+    align-items: center; /* İkon ve yazıyı hizalar */
+    margin-bottom: 10px; /* Mesajlar arasına boşluk */
+    width: 100%; /* Tam genişlik */
+    font-size: 14px;
+    color: #ffffff;
+  }
+  
+  .message.bot {
+    background-color: #444;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: #ffd700;
+    
+
+    
+    
+  }
+  
+/* Kullanıcı adı ve mesaj metni */
+.message .username {
+    font-weight: bold; /* Kalın yazı */
+    margin: 0; /* Kullanıcı adı ile mesaj arası boşluk */
+    color: #00bcd4; /* Kullanıcı adı rengi */
+    min-width: 80px; /* Kullanıcı adı için minimum alan */
+    text-align: left; /* Sol hizalama */
+    display: inline; /* Yan yana görünsün */
+
+  }
+  
+/* Mesaj metni */
+.message-text .username {
+    margin-right: 100px;/* Boşluk kaldır */
+    color: #fff; /* Mesaj rengi */
+   
+    flex: 1; /* Mesaj metni genişlesin */
+    display: inline; /* Yan yana görünsün */
+  }
+  
+  /* Mesaj metni */
+.message-text .bot {
+  margin-right: 100px;/* Boşluk kaldır */
+  color: #fff; /* Mesaj rengi */
+ 
+  flex: 1; /* Mesaj metni genişlesin */
+  display: inline; /* Yan yana görünsün */
+}
+  /* İkon stili */
+  .message img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px; /* İkon ile kullanıcı adı arası boşluk */
+  }
+
+  .message a {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  
+  .message a:hover {
+    text-decoration: underline;
+  }
+  
+  /* New Message Input */
+  #chat-new-message {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    
+  }
+  
+  #message-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    margin-right: 10px;
+    
+  }
+  
+  #send-button {
+    background-color: #1e90ff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #send-button:hover {
+    background-color: #007acc;
+  }
+
+
+  form {
+    max-width: 300px;
+    margin: 100px auto;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+  }
+  
+  form h2 {
+    text-align: center;
+  }
+  
+  form label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e90ff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color: #007acc;
+  }
+  
+  /* Chat Styles */
+  #chat-container {
+    width: 400px;
+    margin: 20px auto;
+    background-color: #1c1c1c;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+  }
+  
+  #chat-header {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  #chat-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  #chat-header h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  #current-user {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #262626;
+  }
+  
+  #current-user img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  #current-user span {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  #chat-messages {
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  #chat-new-message {
+    display: flex;
+    padding: 10px;
+    background-color: #333;
+    
+  }
+  
+  #message-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  #send-button {
+    background-color: #1e90ff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #send-button:hover {
+    background-color: #007acc;
+  }
+
+
+/* Emoji bar stili */
+#emoji-bar {
+    display: flex; /* Emojileri yatay sırala */
+    justify-content: space-around; /* Boşlukları eşit ayarla */
+    background-color: #222; /* Arka plan rengi */
+    padding: 10px; /* İç boşluk */
+    border-radius: 8px; /* Köşeleri yuvarla */
+    margin-bottom: 10px; /* Mesaj yazma alanı ile arası */
+  }
+  
+  /* Emoji stilleri */
+  .emoji {
+    font-size: 24px; /* Emoji boyutu */
+    cursor: pointer; /* Tıklanabilir yap */
+    transition: transform 0.2s ease; /* Hover animasyonu */
+  }
+  
+  .emoji:hover {
+    transform: scale(1.2); /* Üzerine gelince büyüt */
+  }
+
+
+/* Avatar boyutu */
+.message img {
+    width: 15px; /* Avatar boyutu küçültüldü */
+    height: 15px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+/* Mesaj içeriği */
+.content {
+    color: #cccccc;
+    word-wrap: break-word;
+    margin-left: 0;
+    display: inline;
+
+    
+}
+
+
+
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes sway {
+    50% {
+        transform: translateX(20px);
+    }
+}
+
+@keyframes fall {
+  to {
+      transform: translateY(100vh); /* Kar taneleri ekranın altına düşer */
+      opacity: 0; /* Düşerken yavaşça kaybolur */
+  }
+}
