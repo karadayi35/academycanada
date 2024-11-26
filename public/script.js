@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Telegram mesajlarını çekme ve direkt ekrana yazdırma
     function fetchTelegramMessages() {
-        fetch("http://185.205.209.130:5000/get_messages")
+        fetch("/get_messages")
             .then((response) => response.json())
             .then((data) => {
                 data.forEach((msg) => {
