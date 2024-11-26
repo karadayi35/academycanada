@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)", // Sadece /api ile başlayan istekleri yönlendir
+      "source": "/api/(.*)",
       "destination": "http://185.205.209.130:5000/api/$1"
     }
   ]
