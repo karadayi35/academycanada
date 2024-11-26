@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // Ses dosyası
 const messageSound = new Audio("sounds/message_received.mp3");
 
+let currentUser = null; // Kullanıcı bilgisi burada tutulacak
+
 
 fetch("/api/data")
     .then(response => response.json())
@@ -45,6 +47,41 @@ fetch("/api/data")
     
     setInterval(createSnowflake, 300); // Her 300ms'de bir yeni kar tanesi
 
+  // Kullanıcı giriş işlemi
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("login-username").value.trim();
+    const email = document.getElementById("login-email").value.trim();
+
+    if (!username || !email.includes("@gmail.com")) {
+        alert("Please enter a valid username and Gmail address.");
+        return;
+    }
+
+    // Kullanıcıyı backend'e kaydet
+    try {
+        const response = await fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error || "Registration failed"}`);
+            return;
+        }
+
+        const userData = await response.json();
+        currentUser = userData.user; // Backend'den gelen kullanıcı bilgisi
+        startChat(currentUser); // Chat başlatılır
+    } catch (err) {
+        console.error("Kayıt sırasında bir hata oluştu:", err);
+    }
+});
+
+
 
 
 
@@ -52,17 +89,12 @@ fetch("/api/data")
  let botQueue = []; // Bot mesajları için kuyruk
  let messages = []; // Tüm mesajları tutan genel liste
 
- // Eğer kullanıcı giriş yaptıysa veriyi getir
- let currentUser = JSON.parse(localStorage.getItem("chatUser")) || null;
 
  // Daha önceki mesajları yerel depodan yükle ve göster
  const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
  savedMessages.forEach(({ user, text, icon }) => addMessage(user, text, icon));
 
- // Kullanıcı giriş yaptıysa sohbet başlat
- if (currentUser) {
-     startChat(currentUser);
- }
+
 
  // Giriş formu gönderildiğinde
  loginForm.addEventListener("submit", async (e) => {
