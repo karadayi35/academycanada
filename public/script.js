@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({ username, email }),
         });// Kayıt API'sine istek gönder
         try {
-            const response = await fetch("http://185.205.209.130/register", {
+            const response = await fetch("/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email }),
