@@ -17,6 +17,12 @@ const messageSound = new Audio("sounds/message_received.mp3");
 let currentUser = null; // Kullanıcı bilgisi burada tutulacak
 
 
+  // Kullanıcı Kaydı
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+ const username = document.getElementById("login-username").value.trim();
+ const email = document.getElementById("login-email").value.trim();
+
 fetch("/api/data")
     .then(response => response.json())
     .then(data => console.log(data))
@@ -59,26 +65,27 @@ fetch("/api/data")
         return;
     }
 
-    // Kullanıcıyı backend'e kaydet
-    try {
-        const response = await fetch("/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email }),
-        });
+// Kayıt API'sine istek gönder
+        try {
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email }),
+            });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            alert(`Error: ${errorData.error || "Registration failed"}`);
-            return;
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Kayıt başarısız: ${errorData.error}`);
+                return;
+            }
+
+            const data = await response.json();
+            currentUser = data.user;
+            localStorage.setItem("chatUser", JSON.stringify(currentUser));
+            startChat(currentUser);
+        } catch (error) {
+            console.error("Kayıt sırasında hata oluştu:", error);
         }
-
-        const userData = await response.json();
-        currentUser = userData.user; // Backend'den gelen kullanıcı bilgisi
-        startChat(currentUser); // Chat başlatılır
-    } catch (err) {
-        console.error("Kayıt sırasında bir hata oluştu:", err);
-    }
 });
 
 
@@ -141,6 +148,13 @@ fetch("/api/data")
      fetchTelegramMessages(); // Telegram mesajlarını çek
      processBotQueue(); // Bot kuyruğunu işleme başlat
  }
+
+// Daha Önce Kayıtlı Kullanıcı Var mı?
+    const savedUser = JSON.parse(localStorage.getItem("chatUser"));
+    if (savedUser) {
+        currentUser = savedUser;
+        startChat(currentUser);
+    }
 
  // Bot kuyruğunu başlat
  function initializeBots() {
