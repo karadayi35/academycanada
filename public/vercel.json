@@ -1,12 +1,4 @@
 {
   "rewrites": [
-    {
-      "source": "/register",
-      "destination": "http://185.205.209.130:5000/register"
-    },
-    {
-      "source": "/get_messages",
-      "destination": "http://185.205.209.130:5000/get_messages"
-    }
   ]
 }
